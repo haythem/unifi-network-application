@@ -10,11 +10,11 @@ using Semver;
 const string UnifiReleaseUrl = "https://fw-update.ubnt.com/api/firmware?filter=eq~~product~~unifi-controller&filter=eq~~platform~~unix&filter=eq~~channel~~release&sort=-version";
 
 string RepositoryOwner = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY_OWNER")!;
-string RepositoryName = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY_NAME")!;
+string RepositoryName = "unifi-network-application";
 string CommitSha = Environment.GetEnvironmentVariable("GITHUB_SHA")!;
 string Token = Environment.GetEnvironmentVariable("GITHUB_TOKEN")!;
 
-var GitHub = new GitHubClient(new ProductHeaderValue("haythem/unifi-network-application"))
+var GitHub = new GitHubClient(new ProductHeaderValue("unifi-network-application"))
 {
     Credentials = new Credentials(Token)
 };
