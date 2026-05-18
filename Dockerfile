@@ -1,10 +1,13 @@
 FROM docker.io/debian:trixie-slim
 
+ARG UNIFI_VERSION
+ARG UNIFI_ZIP_URL
+
 LABEL org.opencontainers.image.authors="Haythem Tlili <haythem.tlili@outlook.com>" \
     org.opencontainers.image.title="UniFi Network Application" \
     org.opencontainers.image.description="Ubiquiti UniFi Network Controller" \
     org.opencontainers.image.vendor="Custom" \
-    org.opencontainers.image.version="10.0.162" \
+    org.opencontainers.image.version="${UNIFI_VERSION}" \
     org.opencontainers.image.source="https://github.com/haythem/unifi-network-application" \
     org.opencontainers.image.documentation="https://github.com/haythem/unifi-network-application/blob/main/README.md"
 
@@ -21,7 +24,7 @@ RUN apt-get update && \
     apt-get install --no-install-recommends -y \
     curl unzip logrotate openjdk-21-jre-headless && \
     # Unifi Network Application
-    curl -o /tmp/unifi.zip -L https://fw-download.ubnt.com/data/unifi-controller/2bce-unix-10.0.162-0748ccc3-4cff-4210-9f39-cdd8c0459328.zip && \
+    curl -o /tmp/unifi.zip -L "${UNIFI_ZIP_URL}" && \
     unzip /tmp/unifi.zip -d /usr/lib && mv /usr/lib/UniFi /usr/lib/unifi && \
     # Cleanup
     apt-get -y clean && \
