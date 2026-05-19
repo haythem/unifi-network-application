@@ -27,7 +27,7 @@ var newer = latest is not null ?
     versions
         .Where(x => x.Version is not null)
         .Where(x => x.Version!.ComparePrecedenceTo(latest) > 0)
-        .OrderBy(v => v.Version!, SemVersion.SortOrderComparer)
+        .OrderBy(v => v.Version!, SemVersion.PrecedenceComparer)
         .ToList() : versions;
 
 foreach (var version in newer)

@@ -2,6 +2,7 @@ FROM docker.io/debian:trixie-slim
 
 ARG UNIFI_VERSION
 ARG UNIFI_ZIP_URL
+ARG UNIFI_CHECKSUM
 
 LABEL org.opencontainers.image.authors="Haythem Tlili <haythem.tlili@outlook.com>" \
     org.opencontainers.image.title="UniFi Network Application" \
@@ -25,6 +26,9 @@ RUN apt-get update && \
     curl unzip logrotate openjdk-21-jre-headless && \
     # Unifi Network Application
     curl -o /tmp/unifi.zip -L "${UNIFI_ZIP_URL}" && \
+    if [ -z "${UNIFI_CHECKSUM}" ]; then echo "UNIFI_CHECKSUM must be set" >&2; false; fi && \
+    echo "${UNIFI_CHECKSUM}  /tmp/unifi.zip" > /tmp/unifi.zip.sha256 && \
+    sha256sum -c /tmp/unifi.zip.sha256 && \
     unzip /tmp/unifi.zip -d /usr/lib && mv /usr/lib/UniFi /usr/lib/unifi && \
     # Cleanup
     apt-get -y clean && \
